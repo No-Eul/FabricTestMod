@@ -45,7 +45,7 @@ public class TestCommand implements ModInitializer, ClientModInitializer {
 
 	private static int test(CommandSource commandSource, EnvType envType) {
 		Text text = Text.literal("This command was defined and has executed on ")
-				.append(Text.literal(envType.name()).formatted(Formatting.YELLOW))
+				.append(Text.literal("[").append(envType.name()).append("]").formatted(Formatting.YELLOW))
 				.append(" side");
 		if (commandSource instanceof ServerCommandSource source)
 			source.sendFeedback(() -> text, false);
