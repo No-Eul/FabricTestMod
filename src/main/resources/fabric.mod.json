@@ -1,0 +1,46 @@
+{
+	"schemaVersion": 1,
+	"id": "test",
+	"version": "${version}",
+	"name": "${name}",
+	"description": "Test mod",
+	"contact": {
+		"email": "me@NoEul.dev",
+		"homepage": "https://modrinth.com/mod/FabricTestMod",
+		"issues": "https://github.com/No-Eul/FabricTestMod",
+		"sources": "https://github.com/No-Eul/FabricTestMod"
+	},
+	"authors": [
+		{
+			"name": "NoEul",
+			"contact": {
+				"email": "me@NoEul.dev",
+				"homepage": "https://NoEul.dev",
+				"sources": "https://github.com/No-Eul"
+			}
+		}
+	],
+	"contributors": [],
+	"license": "MIT",
+	"icon": "assets/test/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["dev.noeul.fabricmod.test.TestMod"],
+		"client": ["dev.noeul.fabricmod.test.ClientTestMod"]
+	},
+	"mixins": [
+		{
+			"config": "${mod_id}.mixins.json",
+			"environment": "*"
+		},
+		{
+			"config": "${mod_id}.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"minecraft": ">=${minecraft}",
+		"fabricloader": ">=${loader_version}",
+		"fabric": ">=${fabric_api_version}"
+	}
+}
