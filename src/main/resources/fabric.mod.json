@@ -1,0 +1,36 @@
+{
+	"schemaVersion": 1,
+	"id": "test-command",
+	"version": "${version}",
+	"name": "${name}",
+	"description": "The test command mod to check environment whether serverside or clientside",
+	"contact": {
+		"email": "me@NoEul.dev",
+		"homepage": "https://modrinth.com/mod/FabricTestMod/tree/command/environment-test",
+		"issues": "https://github.com/No-Eul/FabricTestMod",
+		"sources": "https://github.com/No-Eul/FabricTestMod/tree/command/environment-test"
+	},
+	"authors": [
+		{
+			"name": "NoEul",
+			"contact": {
+				"email": "me@NoEul.dev",
+				"homepage": "https://NoEul.dev",
+				"sources": "https://github.com/No-Eul"
+			}
+		}
+	],
+	"contributors": [],
+	"license": "MIT",
+	"icon": "assets/test-command/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["dev.noeul.fabricmod.testcommand.TestCommand"],
+		"client": ["dev.noeul.fabricmod.testcommand.TestCommand"]
+	},
+	"depends": {
+		"minecraft": "*",
+		"fabricloader": ">=${loader_version}",
+		"fabric-command-api-v2": "*"
+	}
+}
