@@ -3,7 +3,7 @@ import java.util.Scanner
 
 plugins {
 	id("java")
-	id("fabric-loom") version "1.5-SNAPSHOT"
+	id("fabric-loom") version "latest.release"
 	id("maven-publish")
 }
 
@@ -21,7 +21,7 @@ repositories {
 dependencies {
 	minecraft("com.mojang:minecraft:${property("minecraft_version")}")
 	mappings("net.fabricmc:yarn:${property("yarn_mappings")}:v2")
-	modImplementation("net.fabricmc:fabric-loader:${property("loader_version")}")
+	modImplementation("net.fabricmc:fabric-loader:latest.release")
 
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
 	modRuntimeOnly("com.terraformersmc:modmenu:latest.release")
