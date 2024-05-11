@@ -1,6 +1,3 @@
-import java.nio.charset.StandardCharsets
-import java.util.Scanner
-
 plugins {
 	id("java")
 	id("fabric-loom") version "latest.release"
@@ -49,36 +46,15 @@ loom {
 	}
 
 	runs {
-		val commonVmArgs = arrayOf(
-			"-Dfabric.systemLibraries=${System.getProperty("java.home")}/lib/hotswap/hotswap-agent.jar",
-			"-XX:+AllowEnhancedClassRedefinition",
-			"-XX:HotswapAgent=fatjar",
-			file(".gradle/loom-cache/remapClasspath.txt")
-				.takeIf { it.exists() && it.isFile && it.canRead() }
-				?.let { Scanner(it, StandardCharsets.UTF_8) }
-				?.use {
-					it.useDelimiter(File.pathSeparator)
-					while (it.hasNext()) {
-						val next = it.next()
-						if ("net.fabricmc${File.separator}sponge-mixin" in next)
-							return@use next
-					}
-					return@use null
-				}
-				?.let { "-javaagent:${it}" }
-		).filterNotNull()
-
 		getByName("client") {
 			configName = "Minecraft Client"
 			runDir = "run/client"
-			vmArgs(commonVmArgs)
 			client()
 		}
 
 		getByName("server") {
 			configName = "Minecraft Server"
 			runDir = "run/server"
-			vmArgs(commonVmArgs)
 			server()
 		}
 	}
@@ -121,6 +97,29 @@ tasks {
 	remapJar {
 		archiveBaseName.set("${project.property("archive_base_name")}")
 		archiveAppendix.set("fabric-mc${project.property("minecraft_version")}")
+	}
+}
+
+afterEvaluate {
+	loom.runs.configureEach {
+		vmArgs(
+			"-Dfabric.systemLibraries=${System.getProperty("java.home")}/lib/hotswap/hotswap-agent.jar",
+			"-Dfabric.development=true",
+			"-Dfabric.fabric.debug.deobfuscateWithClasspath",
+			"-Dmixin.debug.export=true",
+			"-Dmixin.debug.verify=true",
+//			"-Dmixin.debug.strict=true",
+			"-Dmixin.debug.countInjections=true",
+			"-Dmixin.hotSwap=true",
+			"-XX:+AllowEnhancedClassRedefinition",
+			"-XX:HotswapAgent=fatjar",
+			"-XX:+IgnoreUnrecognizedVMOptions",
+			"-javaagent:${
+				configurations.compileClasspath.get()
+					.files { it.group == "net.fabricmc" && it.name == "sponge-mixin" }
+					.first()
+			}"
+		)
 	}
 }
 
